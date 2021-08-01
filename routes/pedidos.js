@@ -1,23 +1,78 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+
+const mysql = require("../mysql").pool
+
 
 // retorna todos os produtos
 router.get('/',(req,res,next)=>{
-    res.status(200).send({
-        menssage: "usando get dentro da rota de pedidos"
+    mysql.getConnection((error,conn) => {
+
+        if(error) return res.status(500).send({ error: error })
+
+        conn.query(
+            "SELECT * FROM pedidos;",
+            (error,result,field) => {
+
+                if(error) return res.status(500).send({ error: error })
+
+                    const response = {
+                        length: result.length,
+                        pedidos: result.map( prod => {
+                            return {
+                                id_pedidos: prod.id_pedidos,
+                                quantity: prod.quantity,
+                                products_id_products: prod.products_id_products
+                            }
+                        })
+                    }
+                    return res.status(200).send({result: response })
+                    conn.release();
+            }
+        )
+
     })
 })
 // criar um produto
-router.post('/',(req,res,next)=>{
-    const request = {
-        id: req.body.id,
-        quantity: req.body.quantity
-    }
-    res.status(201).send({
-        menssage: "Pedido criado",
-        pedidoCriado: request
+router.post('/',(req,res)=>{
+  
+
+    mysql.getConnection((error,conn) => {
+
+        if(error) return res.status(500).send({ error: error })
+
+        conn.query(
+            "insert into pedidos (products_id_products,quantity) values (?,?)",
+            [req.body.products_id_products,req.body.quantity],
+
+            (error,result,field) => {
+                conn.release();
+
+                if(error){
+                    return res.status(500).send({
+                        error: error,
+                        response: 'res laksj'
+                    })
+                }
+                const response = {
+                    menssage: 'Pedido solicitado com sucesso',
+                    productCreate:{
+                        id_pedido: result.id_pedidos,
+                        id_products: req.body.products_id_products,
+                        quantity: req.body.quantity
+                    }
+                }
+                res.status(201).send({
+                    menssage: "cadastrado com sucesso",
+                    create: response
+                })
+            }
+        )
     })
+    
+    
 })
+
 
 router.patch('/',(req,res,next)=>{
     res.status(201).send({

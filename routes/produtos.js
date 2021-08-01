@@ -38,7 +38,8 @@ router.get('/',(req,res,next)=>{
 router.post('/',(req,res)=>{
     const product = {
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        description: req.body.description
     }
 
     mysql.getConnection((error,conn) => {
@@ -47,7 +48,7 @@ router.post('/',(req,res)=>{
 
         conn.query(
             "insert into products (name,price) values (?,?)",
-            [req.body.name,req.body.price],
+            [req.body.name,req.body.price,req.body.description],
 
             (error,result,field) => {
                 conn.release();
@@ -63,7 +64,8 @@ router.post('/',(req,res)=>{
                     productCreate:{
                         id_product: result.id_products,
                         name: req.body.name,
-                        price: req.body.price
+                        price: req.body.price,
+                        description: req.body.description,
                     }
                 }
                 res.status(201).send({

@@ -3,7 +3,6 @@ const app = express()
 const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
 const routesRequests = require('./routes/pedidos')
-const bodyParse = require('body-parser')
 
 // monitora as requisições feitas.
 app.use(morgan('dev'))
