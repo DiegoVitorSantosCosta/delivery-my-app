@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
 const routesRequests = require('./routes/pedidos')
 
+
+app.use('/uploads',express.static('uploads'));
 // monitora as requisições feitas.
 app.use(morgan('dev'))
 

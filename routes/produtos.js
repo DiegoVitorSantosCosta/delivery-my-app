@@ -4,6 +4,7 @@ const router = express.Router()
 const mysql = require("../mysql").pool
 const multer = require('multer');
 
+// faz o caminho da imagem 
 const storage =  multer.diskStorage({
     destination: function (req,file,cb){
         
@@ -14,7 +15,15 @@ const storage =  multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage })
+// filtra o tipo de arquivo que eu quero receber
+const filter = (req,file,cb) => {
+    file.mimetype === 'image/pdf' ? cb(null,false) : cb(null,true)
+}
+
+const upload = multer({ 
+    storage: storage,
+    // fileFilter: filter
+ })
 
 
 // retorna todos os produtos
@@ -38,7 +47,10 @@ router.get('/',(req,res,next)=>{
                                 name: prod.name,
                                 price: prod.price,
                                 id_products: prod.id_products,
-                                description: prod.description
+                                description: prod.description,
+                                filename: prod.filename,
+                                fileServerPath: prod.fileServerPath
+                                
                             }
                         })
                     }
@@ -54,15 +66,22 @@ router.get('/',(req,res,next)=>{
 
 
 // criar um produto
-router.post('/',upload.single('products_img'),(req,res)=>{
+router.post('/',upload.single('products_img'),(req,res,next)=>{
 
+    console.log(req.file);
     mysql.getConnection((error,conn) => {
 
         if(error) return res.status(500).send({ error: error })
 
         conn.query(
-            "insert into products (name,price,description, products_img) values (?,?,?,?)",
-            [req.body.name,req.body.price,req.body.description,req.body.products_img],
+            "insert into products (name,price,description,fileServerPath,filename) values (?,?,?,?,?)",
+            [
+                req.body.name,
+                req.body.price,
+                req.body.description,
+                req.file.path,
+                req.file.filename
+            ],
 
             (error,result,field) => {
                 conn.release();
@@ -80,12 +99,13 @@ router.post('/',upload.single('products_img'),(req,res)=>{
                         name: req.body.name,
                         price: req.body.price,
                         description: req.body.description,
-                        products_img: req.body.products_img
+                        
+                        
                     }
                 }
                 res.status(201).send({
                     menssage: "cadastrado com sucesso",
-                    create: response.productCreate
+                    create: response
                 })
             }
         )
@@ -95,6 +115,7 @@ router.post('/',upload.single('products_img'),(req,res)=>{
 })
 
 router.put('/',(req,res,next)=>{
+    console.log(req.body.filename);
     mysql.getConnection((error,conn) => {
 
         if(error) return res.status(500).send({ error: error })
@@ -102,13 +123,16 @@ router.put('/',(req,res,next)=>{
         conn.query(
             `UPDATE products
              SET name = ?,
-             price = ?
+             price = ?,
+             filename = ?
 
               WHERE id_products = ?`,
             [
                 req.body.name,
                 req.body.price,
                 req.body.id_products,
+                req.body.filename
+                
             ],
             (error,result,field) => {
                 conn.release();
