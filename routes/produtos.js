@@ -10,11 +10,11 @@ const storage =  multer.diskStorage({
         cb(null,`./uploads/`);
     },
     filename: function (req,file,cb) {
-        cb(new Date().toISOString() +  file.originalname)
+        cb(null,new Date().toISOString() +  file.originalname)
     }
 })
 
-const upload = multer({ storage: storage})
+const upload = multer({ storage: storage })
 
 
 // retorna todos os produtos
@@ -80,7 +80,7 @@ router.post('/',upload.single('products_img'),(req,res)=>{
                         name: req.body.name,
                         price: req.body.price,
                         description: req.body.description,
-                        products_img: products_img
+                        products_img: req.body.products_img
                     }
                 }
                 res.status(201).send({
