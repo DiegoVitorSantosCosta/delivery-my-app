@@ -2,6 +2,20 @@ const express = require('express')
 const router = express.Router()
 
 const mysql = require("../mysql").pool
+const multer = require('multer');
+
+const storage =  multer.diskStorage({
+    destination: function (req,file,cb){
+        
+        cb(null,`./uploads/`);
+    },
+    filename: function (req,file,cb) {
+        cb(new Date().toISOString() +  file.originalname)
+    }
+})
+
+const upload = multer({ storage: storage})
+
 
 // retorna todos os produtos
 router.get('/',(req,res,next)=>{
@@ -13,6 +27,7 @@ router.get('/',(req,res,next)=>{
         conn.query(
             "SELECT * FROM products;",
             (error,result,field) => {
+                conn.release();
 
                 if(error) return res.status(500).send({ error: error })
 
@@ -22,33 +37,32 @@ router.get('/',(req,res,next)=>{
                             return {
                                 name: prod.name,
                                 price: prod.price,
-                                id_products: prod.id_products
+                                id_products: prod.id_products,
+                                description: prod.description
                             }
                         })
                     }
                     return res.status(200).send({result: response })
-                    conn.release();
+                    
             }
         )
 
     })
     
 })
+
+
+
 // criar um produto
-router.post('/',(req,res)=>{
-    const product = {
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description
-    }
+router.post('/',upload.single('products_img'),(req,res)=>{
 
     mysql.getConnection((error,conn) => {
 
         if(error) return res.status(500).send({ error: error })
 
         conn.query(
-            "insert into products (name,price) values (?,?)",
-            [req.body.name,req.body.price,req.body.description],
+            "insert into products (name,price,description, products_img) values (?,?,?,?)",
+            [req.body.name,req.body.price,req.body.description,req.body.products_img],
 
             (error,result,field) => {
                 conn.release();
@@ -66,6 +80,7 @@ router.post('/',(req,res)=>{
                         name: req.body.name,
                         price: req.body.price,
                         description: req.body.description,
+                        products_img: products_img
                     }
                 }
                 res.status(201).send({
@@ -79,7 +94,7 @@ router.post('/',(req,res)=>{
     
 })
 
-router.patch('/',(req,res,next)=>{
+router.put('/',(req,res,next)=>{
     mysql.getConnection((error,conn) => {
 
         if(error) return res.status(500).send({ error: error })
@@ -135,7 +150,7 @@ router.delete('/',(req,res,next)=>{
     })
 })
 
-router.put('/',(req,res,next)=>{
+router.patch('/',(req,res,next)=>{
     res.status(201).send({
         menssage: "usando post dentro da rota de produtos"
     })
