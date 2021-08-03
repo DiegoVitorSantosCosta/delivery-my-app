@@ -1,9 +1,9 @@
 {
     "env":{
-        "MYSQL_USER": "root",
-        "MYSQL_PASSWORD":"diegovitor",
-        "MYSQL_DATABASE":"banco_api",
-        "MYSQL_HOST": "172.17.0.2",
+        "MYSQL_USER": "ba56a182084032",
+        "MYSQL_PASSWORD":"3f0fd637",
+        "MYSQL_DATABASE":"heroku_a85c027beac9687",
+        "MYSQL_HOST": "us-cdbr-east-04.cleardb.com",
         "MYSQL_PORT": 3306
 
       
