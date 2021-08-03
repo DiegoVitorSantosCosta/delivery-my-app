@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
-const routesUploads = require('./routes/uploads');
+// const routesUploads = require('./routes/uploads').app;
 
 
 app.use('/uploads',express.static('uploads'));
@@ -13,7 +13,30 @@ app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
 app.use('/products',routesProducts);
-app.use('/upload',routesUploads);
+// app.use('/upload',routesUploads);
+
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
+app.post('/upload', upload.single('picture'),(req,res) =>{
+    
+    
+    const {lastName,numbe,picture} = req.body;
+    res.json({ lastName, number,picture })
+    // mysql.getConnection((error,conn) => {
+    //     if(error) return res.status(500).send({ menssage: error });
+
+    //     conn.query(
+    //         (error,result,field) => {
+    //             conn.release();
+    //             if(error) return res.status(500).send( { menssage: error });
+
+            
+    //         }
+    //     )
+    // })
+})
+
 
 app.use((req,res,next)=>{
     const error = new Error('Não encontrado ...')

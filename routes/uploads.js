@@ -1,10 +1,12 @@
 const express = require('express');
+const app = express();
+
 const router = express.Router();
 const mysql = require('../mysql').pool;
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/upload', upload.single('picture'),(req,res) =>{
+app.post('/upload', upload.single('picture'),(req,res) =>{
     
     
     const {lastName,numbe,picture} = req.body;
@@ -24,4 +26,4 @@ router.post('/upload', upload.single('picture'),(req,res) =>{
 })
 
 
-module.exports = router
+module.exports = app
