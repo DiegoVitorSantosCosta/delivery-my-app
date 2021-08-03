@@ -13,7 +13,7 @@ app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
 app.use('/products',routesProducts);
-app.use('/uploads',routesUploads);
+app.use('/upload',routesUploads);
 
 app.use((req,res,next)=>{
     const error = new Error('Não encontrado ...')
