@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../mysql').pool;
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
-
-router.post('/',(req,res) =>{
+router.post('/', upload.single('picture'),(req,res) =>{
     
-    console.log(req.body);
-    const {lastName,number} = req.body;
-    res.json({ lastName, number })
+    
+    const {lastName,numbe,picture} = req.body;
+    res.json({ lastName, number,picture })
     // mysql.getConnection((error,conn) => {
     //     if(error) return res.status(500).send({ menssage: error });
 
