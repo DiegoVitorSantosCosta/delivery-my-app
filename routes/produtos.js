@@ -67,21 +67,18 @@ router.get('/',(req,res,next)=>{
 
 
 // criar um produto
-router.post('/',upload.single('products_img'),(req,res,next)=>{
+router.post('/',(req,res,next)=>{
 
-    console.log(req.file);
     mysql.getConnection((error,conn) => {
 
         if(error) return res.status(500).send({ error: error })
 
         conn.query(
-            "insert into products (name,price,description,fileServerPath,filename) values (?,?,?,?,?)",
+            "insert into products (name,price,description) values (?,?,?)",
             [
                 req.body.name,
                 req.body.price,
-                req.body.description,
-                req.file.path,
-                req.file.filename
+                req.body.description
             ],
 
             (error,result,field) => {
