@@ -54,7 +54,7 @@ router.get('/',(req,res,next)=>{
                             }
                         })
                     }
-                    connection.end();
+                    
                     return res.status(200).send({result: response })
                     
             }
