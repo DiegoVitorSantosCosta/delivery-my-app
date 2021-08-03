@@ -96,9 +96,7 @@ router.post('/',(req,res,next)=>{
                         id_product: result.id_products,
                         name: req.body.name,
                         price: req.body.price,
-                        description: req.body.description,
-                        
-                        
+                        description: req.body.description,                        
                     }
                 }
                 res.status(201).send({

@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
+const routesUploads = require('./routes/uploads');
 
 
 app.use('/uploads',express.static('uploads'));
@@ -11,7 +12,8 @@ app.use(morgan('dev'))
 app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
-app.use('/products',routesProducts)
+app.use('/products',routesProducts);
+app.use('/uploads',routesUploads);
 
 app.use((req,res,next)=>{
     const error = new Error('Não encontrado ...')
