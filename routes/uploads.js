@@ -22,7 +22,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
     
     
     const { filename,fileServerPath } = req.file;
-   
+    
 
     mysql.getConnection((error,conn) => {
         if(error) return res.status(500).send({ menssage: error });
@@ -31,21 +31,25 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
             "insert into pictures (filename,fileServerPath) values (?,?);",
             [
                 req.file.filename,
-                req.file.fileServerPath
+                'https://delivery-myapp.herokuapp.com/' + req.file.path
             ],
             (error,result,field) => {
                 conn.release();
                 if(error) return res.status(500).send( { menssage: error });
 
+                const response = {
+                    menssage: 'produto criado com sucesso',
+                    productCreate:{
+                        id: result.id,
+                        filename: req.body.filename,                 
+                        fileServerPath: req.body.fileServerPath                   
+                    }
+                }
+            
                 res.status(201).send({
         
-                    id: result.id,
-                    filename: req.file.originalname,
-                     fileServerPath: 'https://delivery-myapp.herokuapp.com/' + req.file.path,
-                     teste: filename,
-                     test: fileServerPath
+                    pictures: response
                      })
-            
             }
         )
     })
