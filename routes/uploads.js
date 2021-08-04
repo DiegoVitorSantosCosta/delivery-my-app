@@ -33,17 +33,18 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
                 req.file.filename,
                 'https://delivery-myapp.herokuapp.com/' + req.file.path
             ],
-            (error,result,field) => {
-                console.log(result)
+            async (error,result,field) => {
+                
                 conn.release();
                 if(error) return res.status(500).send( { menssage: error });
 
-                const response = {
+                const response = await {
                     menssage: 'produto criado com sucesso',
                     productCreate:{
-                        id: result.id,
-                        filename: req.body.filename,                 
-                        fileServerPath: req.body.fileServerPath                   
+                        id: result,
+                        id1: result.id,
+                        filename: req.file.filename,                 
+                        fileServerPath: req.file.fileServerPath                   
                     }
                 }
             

@@ -100,6 +100,7 @@ router.post('/',(req,res,next)=>{
                 const response = {
                     menssage: 'produto criado com sucesso',
                     productCreate:{
+                        
                         id_product: result.id_products,
                         name: req.body.name,
                         price: req.body.price,
