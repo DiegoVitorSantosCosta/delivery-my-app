@@ -39,13 +39,12 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
                 if(error) return res.status(500).send( { menssage: error });
 
                 const response = await {
-                    menssage: 'imagem salva',
-                    productCreate:{
+                    menssage: 'Success',
                         id: result.insertId,
                         
                         filename: req.file.filename,                 
                         fileServerPath: `https://delivery-myapp.herokuapp.com/${req.file.path}`                    
-                    }
+                    
                 }
             
                 res.status(201).send({
