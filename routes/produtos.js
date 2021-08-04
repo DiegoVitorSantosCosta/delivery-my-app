@@ -74,11 +74,13 @@ router.post('/',(req,res,next)=>{
         if(error) return res.status(500).send({ error: error })
 
         conn.query(
-            "insert into products (name,price,description) values (?,?,?)",
+            "insert into products (name,price,description) values (?,?,?,?,?)",
             [
                 req.body.name,
                 req.body.price,
-                req.body.description
+                req.body.description,
+                req.body.filename,
+                req.body.fileServerPath
             ],
 
             (error,result,field) => {
@@ -96,7 +98,9 @@ router.post('/',(req,res,next)=>{
                         id_product: result.id_products,
                         name: req.body.name,
                         price: req.body.price,
-                        description: req.body.description,                        
+                        description: req.body.description,
+                        filename: [req.body.filename],                 
+                        fileServerPath: [req.body.fileServerPath]                       
                     }
                 }
                 res.status(201).send({
