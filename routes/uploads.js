@@ -6,11 +6,11 @@ const mysql = require('../mysql').pool;
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
-app.post('/upload', upload.single('picture'),(req,res) =>{
+router.post('/', upload.single('picture'),(req,res) =>{
     
     
-    const {lastName,numbe,picture} = req.body;
-    res.json({ lastName, number,picture })
+    const { picture } = req.file;
+    res.json({ picture })
     // mysql.getConnection((error,conn) => {
     //     if(error) return res.status(500).send({ menssage: error });
 
@@ -26,4 +26,4 @@ app.post('/upload', upload.single('picture'),(req,res) =>{
 })
 
 
-module.exports = app
+module.exports = router

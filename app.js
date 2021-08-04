@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
-// const routesUploads = require('./routes/uploads').app;
+const routesUploads = require('./routes/uploads')
 
 
 app.use('/uploads',express.static('uploads'));
@@ -13,51 +13,31 @@ app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
 app.use('/products',routesProducts);
-// app.use('/upload',routesUploads);
+app.use('/upload',routesUploads);
 
-const multer = require('multer');
+// const multer = require('multer');
 
 
 // Configuração de armazenamento
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-        // Extração da extensão do arquivo original:
-        const extensaoArquivo = file.originalname.split('.')[1];
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'uploads/')
+//     },
+//     filename: function (req, file, cb) {
+//         // Extração da extensão do arquivo original:
+//         const extensaoArquivo = file.originalname.split('.')[1];
 
-        // Cria um código randômico que será o nome do arquivo
-        const novoNomeArquivo = require('crypto')
-            .randomBytes(64)
-            .toString('hex');
+//         // Cria um código randômico que será o nome do arquivo
+//         const novoNomeArquivo = require('crypto')
+//             .randomBytes(64)
+//             .toString('hex');
 
-        // Indica o novo nome do arquivo:
-        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
-    }
-});
+//         // Indica o novo nome do arquivo:
+//         cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+//     }
+// });
 
 const upload = multer({ storage });
-
-app.post('/cadastro', upload.single('picture'),(req,res) =>{
-    
-    
-    const { picture } = req.body;
-    res.json({ picture })
-    // mysql.getConnection((error,conn) => {
-    //     if(error) return res.status(500).send({ menssage: error });
-
-    //     conn.query(
-    //         (error,result,field) => {
-    //             conn.release();
-    //             if(error) return res.status(500).send( { menssage: error });
-
-            
-    //         }
-    //     )
-    // })
-})
-
 
 app.use((req,res,next)=>{
     const error = new Error('Não encontrado ...')
