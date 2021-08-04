@@ -5,9 +5,17 @@ const router = express.Router();
 const mysql = require('../mysql').pool;
 const multer = require('multer');
 
+const storage = multer.diskStorage({
 
+    destination: function (req,file,cb){
+        cb(null, './uploads/')
+    },
+    filename: function (req,file,cb){
+        cb(null, file.mimetype)
+    }
+})
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: storage });
 
 router.post('/', upload.single('picture'),(req,res,next) =>{
     
