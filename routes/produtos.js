@@ -44,12 +44,13 @@ router.get('/',(req,res,next)=>{
                         length: result.length,
                         products: result.map( prod => {
                             return {
+                                id_products: prod.id_products,
                                 name: prod.name,
                                 price: prod.price,
-                                id_products: prod.id_products,
                                 description: prod.description,
                                 pictures: [
                                     {
+                                        id: prod.id,
                                         filename: prod.filename,
                                         fileServerPath: prod.fileServerPath
                                     }

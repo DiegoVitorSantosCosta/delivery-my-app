@@ -4,7 +4,7 @@ const app = express();
 const router = express.Router();
 const mysql = require('../mysql').pool;
 const multer = require('multer');
-
+const id = 0
 const storage = multer.diskStorage({
 
     destination: function (req,file,cb){
@@ -23,6 +23,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
     
     const { picture } = req.file;
     res.status(201).send({
+        id: id ++,
         filename: req.file.originalname,
          fileServerPath: 'https://delivery-myapp.herokuapp.com/' + req.file.path,
          })
