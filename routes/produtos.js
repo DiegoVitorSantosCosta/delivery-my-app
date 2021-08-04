@@ -44,17 +44,12 @@ router.get('/',(req,res,next)=>{
                         length: result.length,
                         products: result.map( prod => {
                             return {
-                                id_products: prod.id_products,
                                 name: prod.name,
                                 price: prod.price,
+                                id_products: prod.id_products,
                                 description: prod.description,
-                                pictures: [
-                                    {
-                                        id: prod.id,
-                                        filename: prod.filename,
-                                        fileServerPath: prod.fileServerPath
-                                    }
-                                ]
+                                filename: prod.filename,
+                                fileServerPath: prod.fileServerPath
                                 
                             }
                         })
@@ -100,19 +95,12 @@ router.post('/',(req,res,next)=>{
                 const response = {
                     menssage: 'produto criado com sucesso',
                     productCreate:{
-
                         id_product: result.id_products,
                         name: req.body.name,
                         price: req.body.price,
                         description: req.body.description,
-                        pictures: req.map( res => {
-                            return {
-                                filename: res.body.filename,                 
-                                fileServerPath: res.body.fileServerPath
-                            }
-                        })
-                            
-                                           
+                        filename: [req.body.filename],                 
+                        fileServerPath: [req.body.fileServerPath]                       
                     }
                 }
                 res.status(201).send({
