@@ -11,11 +11,11 @@ const storage = multer.diskStorage({
         cb(null, './uploads/')
     },
     filename: function (req,file,cb){
-        cb(null, file.originalname)
+        cb(null, file.mimetype)
     }
 })
 
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
 
 router.post('/', upload.single('picture'),(req,res,next) =>{
     
