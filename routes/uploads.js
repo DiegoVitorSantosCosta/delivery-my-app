@@ -44,7 +44,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
                         id: result.insertId,
                         
                         filename: req.file.filename,                 
-                        fileServerPath: `'https://delivery-myapp.herokuapp.com'${req.file.path}`                    
+                        fileServerPath: `https://delivery-myapp.herokuapp.com/${req.file.path}`                    
                     }
                 }
             
