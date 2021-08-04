@@ -5,7 +5,7 @@ const routesProducts = require('./routes/produtos')
 const routesUploads = require('./routes/uploads')
 
 
-// app.use('/uploads',express.static('uploads'));
+app.use('/uploads',express.static('uploads'));
 // monitora as requisições feitas.
 app.use(morgan('dev'))
 
