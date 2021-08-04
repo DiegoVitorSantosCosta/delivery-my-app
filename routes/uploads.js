@@ -31,7 +31,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
             "insert into pictures (filename,fileServerPath) values (?,?);",
             [
                 req.file.filename,
-                'https://delivery-myapp.herokuapp.com/' + req.file.path
+                `'https://delivery-myapp.herokuapp.com'/${req.file.path}`
             ],
             async (error,result,field) => {
                 
@@ -39,10 +39,10 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
                 if(error) return res.status(500).send( { menssage: error });
 
                 const response = await {
-                    menssage: 'produto criado com sucesso',
+                    menssage: 'imagem salva',
                     productCreate:{
-                        id: result,
-                        id1: result.id,
+                        id: result.insertId,
+                        
                         filename: req.file.filename,                 
                         fileServerPath: req.file.fileServerPath                   
                     }
