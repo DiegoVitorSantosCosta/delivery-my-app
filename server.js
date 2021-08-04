@@ -6,5 +6,4 @@ server.listen(port, () => {
     console.log("App is running on port " + port);
 });
 
-
 // server.listen(port)

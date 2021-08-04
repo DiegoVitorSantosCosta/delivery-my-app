@@ -42,8 +42,8 @@ const upload = multer({ storage });
 app.post('/cadastro', upload.single('picture'),(req,res) =>{
     
     
-    const {lastName,numbe,picture} = req.body;
-    res.json({ lastName, number,picture })
+    const { picture } = req.body;
+    res.json({ picture })
     // mysql.getConnection((error,conn) => {
     //     if(error) return res.status(500).send({ menssage: error });
 
