@@ -74,7 +74,7 @@ router.post('/',(req,res,next)=>{
         if(error) return res.status(500).send({ error: error })
 
         conn.query(
-            "insert into products (name,price,description) values (?,?,?,?,?)",
+            "insert into products (name,price,description,filename,fileServerPath) values (?,?,?,?,?)",
             [
                 req.body.name,
                 req.body.price,
