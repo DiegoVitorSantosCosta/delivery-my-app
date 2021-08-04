@@ -48,8 +48,12 @@ router.get('/',(req,res,next)=>{
                                 price: prod.price,
                                 id_products: prod.id_products,
                                 description: prod.description,
-                                filename: prod.filename,
-                                fileServerPath: prod.fileServerPath
+                                pictures: [
+                                    {
+                                        filename: prod.filename,
+                                        fileServerPath: prod.fileServerPath
+                                    }
+                                ]
                                 
                             }
                         })
