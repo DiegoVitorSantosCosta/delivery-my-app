@@ -34,6 +34,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
                 'https://delivery-myapp.herokuapp.com/' + req.file.path
             ],
             (error,result,field) => {
+                console.log(result)
                 conn.release();
                 if(error) return res.status(500).send( { menssage: error });
 
