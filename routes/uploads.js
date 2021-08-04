@@ -6,7 +6,7 @@ const mysql = require('../mysql').pool;
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/', upload.single('picture'),(req,res) =>{
+router.post('/', upload.single('picture'),(req,res,next) =>{
     
     
     const { picture } = req.file;
