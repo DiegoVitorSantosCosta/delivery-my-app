@@ -31,7 +31,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
             "insert into pictures (filename,fileServerPath) values (?,?);",
             [
                 req.file.filename,
-                `'https://delivery-myapp.herokuapp.com'/${req.file.path}`
+                req.file.path
             ],
             async (error,result,field) => {
                 
@@ -44,7 +44,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
                         id: result.insertId,
                         
                         filename: req.file.filename,                 
-                        fileServerPath: req.file.fileServerPath                   
+                        fileServerPath: `'https://delivery-myapp.herokuapp.com'${req.file.fileServerPath}`                    
                     }
                 }
             
