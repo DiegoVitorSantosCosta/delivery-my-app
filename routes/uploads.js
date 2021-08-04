@@ -10,7 +10,7 @@ router.post('/', upload.single('picture'),(req,res,next) =>{
     
     
     const { picture } = req.file;
-    res.json({ picture })
+    res.status(201).send({ result: req.file })
     // mysql.getConnection((error,conn) => {
     //     if(error) return res.status(500).send({ menssage: error });
 
