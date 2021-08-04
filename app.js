@@ -37,7 +37,7 @@ app.use('/upload',routesUploads);
 //     }
 // });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 app.use((req,res,next)=>{
     const error = new Error('Não encontrado ...')
