@@ -6,28 +6,22 @@ const routesUploads = require('./routes/uploads')
 
 // configurações de cors
 app.use((req, res, next) => {
-    
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+        app.use(cors());
+        next();
+    })
+    // // intercept OPTIONS method
+    // if ('OPTIONS' === req.method) {
+    // 
+    // res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
+    //   res.send(200);
+    // else {
+    //   next();
+    // }
+// })
 
-    // intercept OPTIONS method
-    if ('OPTIONS' === req.method) {
-        res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
-      res.send(200);
-    }
-    else {
-      next();
-    }
-})
 
-var options = {
-    host: "proxy",
-    port: 8080,
-    path: "https://delivery-myapp.herokuapp.com",
-    headers: {
-      Host: "https://delivery-myapp.herokuapp.com"
-    }
-  };
 
 app.use('/uploads',express.static('uploads'));
 // monitora as requisições feitas.
