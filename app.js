@@ -5,6 +5,14 @@ const routesProducts = require('./routes/produtos')
 const routesUploads = require('./routes/uploads')
 
 
+// configurações de cors
+app.use((req,res,next)=>{
+    // dendo permissão maxima aqui
+    res.header("Acces-Control-Allow-Origin","*")
+    
+ 
+})
+
 app.use('/uploads',express.static('uploads'));
 // monitora as requisições feitas.
 app.use(morgan('dev'))
@@ -33,20 +41,6 @@ app.use((error,req,res,next) =>{
     })
 })
 
-// configurações de cors
-app.use((req,res,next)=>{
-    // dendo permissão maxima aqui
-    res.header("Acces-Control-Allow-Origin","*"),
-    
-    res.header("Acces-Control-Allow-Header",
-    "Origin,X-Requested-With,Content-type,Accept")
-
-    if(req.method === "OPTIONS"){
-        res.header("Acess-Control-Allow-Methods","PUT,POST,PATCH,GET,DELET")
-        return res.status(200).send({})
-    }
-    next();
-})
 
 
 
