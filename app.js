@@ -13,7 +13,9 @@ app.use((req,res,next)=>{
 
     if(req.method === "OPTIONS"){
         res.header("Acess-Control-Allow-Methods","PUT,POST,PATCH,GET,DELET")
-        return res.status(200).send({})
+        return res.status(200).send({
+            mensage: 'kasdjfkaslfdjsaklfj'
+        })
     }
     next();
 })
