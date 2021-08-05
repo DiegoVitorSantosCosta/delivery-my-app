@@ -4,13 +4,13 @@ const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
 const routesUploads = require('./routes/uploads')
 
-
 // configurações de cors
 app.use((req,res,next)=>{
     // dendo permissão maxima aqui
     res.header("Acces-Control-Allow-Origin","*")
     
- 
+    r
+    next();
 })
 
 app.use('/uploads',express.static('uploads'));
@@ -40,6 +40,7 @@ app.use((error,req,res,next) =>{
         }
     })
 })
+
 
 
 
