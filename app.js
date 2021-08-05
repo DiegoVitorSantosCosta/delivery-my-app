@@ -5,19 +5,18 @@ const routesProducts = require('./routes/produtos')
 const routesUploads = require('./routes/uploads')
 
 // configurações de cors
-app.use((req,res,next)=>{
-    // dendo permissão maxima aqui
-    res.header("Acces-Control-Allow-Origin","*")
-    
-  
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
 
-    if(req.method === "OPTIONS"){
-        res.header("Acess-Control-Allow-Methods","PUT,POST,PATCH,GET,DELET")
-        return res.status(200).send({
-            mensage: 'kasdjfkaslfdjsaklfj'
-        })
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
     }
-    next();
+    else {
+      next();
+    }
 })
 
 app.use('/uploads',express.static('uploads'));
