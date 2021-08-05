@@ -9,7 +9,7 @@ app.use((req, res, next) => {
     
 
     // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
+    if ('OPTIONS' === req.method) {
         res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
@@ -20,6 +20,15 @@ app.use((req, res, next) => {
     }
 })
 
+var options = {
+    host: "proxy",
+    port: 8080,
+    path: "https://delivery-myapp.herokuapp.com",
+    headers: {
+      Host: "https://delivery-myapp.herokuapp.com"
+    }
+  };
+
 app.use('/uploads',express.static('uploads'));
 // monitora as requisições feitas.
 app.use(morgan('dev'))
@@ -27,7 +36,7 @@ app.use(morgan('dev'))
 app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
-app.use('/products',routesProducts);
+app.use('/products',options,routesProducts);
 app.use('/cadastro',routesUploads);
 
 
