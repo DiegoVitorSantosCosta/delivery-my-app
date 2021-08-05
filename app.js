@@ -36,7 +36,7 @@ app.use(morgan('dev'))
 app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
-app.use('/products',options,routesProducts);
+app.use('/products',routesProducts);
 app.use('/cadastro',routesUploads);
 
 
