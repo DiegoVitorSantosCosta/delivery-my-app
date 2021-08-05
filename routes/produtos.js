@@ -99,8 +99,8 @@ router.post('/',(req,res,next)=>{
                         name: req.body.name,
                         price: req.body.price,
                         description: req.body.description,
-                        filename: [req.body.filename],                 
-                        fileServerPath: [req.body.fileServerPath]                       
+                        filename: req.body.filename,                 
+                        fileServerPath: req.body.fileServerPath                       
                     }
                 }
                 res.status(201).send({
