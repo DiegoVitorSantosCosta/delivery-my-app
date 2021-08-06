@@ -19,10 +19,10 @@ router.post('/',(req,res,next) =>{
 
                 result.length > 0
                  ? 
-                 res.status(401).send({ menssage: 'usuario já existe' })
+                 res.status(409).send({ menssage: 'usuario já existe' })
 
                  :
-                 
+
                  bcrypt.hash(req.body.password,10,(err,hash)=>{
                     if(err) return res.status(500).send({ menssage: err });
                     conn.query(
