@@ -3,7 +3,9 @@ const app = express();
 
 const router = express.Router();
 const mysql = require('../mysql').pool;
+const jwt = require('jsonwebtoken');
 
+// deixa em hash a senha
 const bcrypt = require('bcrypt');
 
 router.post('/',(req,res,next) =>{    
@@ -28,7 +30,19 @@ router.post('/',(req,res,next) =>{
                  bcrypt.compare(req.body.password,result[0].password,(err,response)=>{
                     if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
 
-                    if(response) return res.status(201).send({ menssage: 'login realizado com sucesso' });
+                    if(response){ 
+
+                        const token = jwt.sign({ id_user: response[0].id,
+                            email: response[0].email
+                        },
+                        
+                        process.env.JWT_KEY,{expiresIn: "1h"});
+
+
+                        return res.status(201).send({ 
+                            menssage: 'login realizado com sucesso',
+                            token: token
+                         });}
 
                     return res.status(401).send({ menssage: 'senha errada' });
                    
