@@ -3,7 +3,7 @@ const app = express();
 
 const router = express.Router();
 const mysql = require('../mysql').pool;
-const jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 
 // deixa em hash a senha
 const bcrypt = require('bcrypt');
@@ -32,14 +32,15 @@ router.post('/',(req,res,next) =>{
 
                     if(response){ 
                             
-                        
+                        const token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+
                             // const token = jwt.sign(userInfo, secret);
                             
                            
 
                         return res.status(201).send({ 
                             menssage: 'login realizado com sucesso',
-                            token: 'token'
+                            token: token
                          });
                         }
 
