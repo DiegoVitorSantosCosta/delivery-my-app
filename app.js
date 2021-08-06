@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
 const routesUploads = require('./routes/uploads');
 const routerUser = require('./routes/users');
+const routerLogin = require('./routes/login');
 
 const cors = require('cors');
 
@@ -39,6 +40,7 @@ app.use(express.json()) // entrada de json no body
 app.use('/products',routesProducts);
 app.use('/cadastro',routesUploads);
 app.use('/users',routerUser);
+app.use('/users',routerLogin);
 
 
 app.use((req,res,next)=>{
