@@ -40,7 +40,7 @@ app.use(express.json()) // entrada de json no body
 app.use('/products',routesProducts);
 app.use('/cadastro',routesUploads);
 app.use('/users',routerUser);
-app.use('/users',routerLogin);
+app.use('/login',routerLogin);
 
 
 app.use((req,res,next)=>{
