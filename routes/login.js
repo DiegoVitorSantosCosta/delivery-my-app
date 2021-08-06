@@ -31,15 +31,15 @@ router.post('/',(req,res,next) =>{
                     if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
 
                     if(response){ 
-                            const userInfo
+                            
                         
-                            const token = jwt.sign(userInfo, secret);
+                            // const token = jwt.sign(userInfo, secret);
                             
                            
 
                         return res.status(201).send({ 
                             menssage: 'login realizado com sucesso',
-                            token: token
+                            token: 'token'
                          });
                         }
 
