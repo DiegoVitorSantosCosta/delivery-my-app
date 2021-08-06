@@ -11,11 +11,15 @@ router.post('/',(req,res,next) =>{
     mysql.getConnection((error,conn) => {
         if(error) return res.status(500).send({ menssage: error });
 
+        const query = "select * from users where email =  ?";
+
         conn.query(
-            "select * from users where email =  ?",
+
             query,[req.body.email],
+
             async (error,result,field) => {
                 conn.release();
+                
                 if(error) return res.status(500).send({ menssage: error });
 
                 if(result.length < 1) return   res.status(409).send({ menssage: 'email não existe' }) ;
