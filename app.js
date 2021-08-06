@@ -3,6 +3,8 @@ const app = express()
 const morgan = require('morgan')
 const routesProducts = require('./routes/produtos')
 const routesUploads = require('./routes/uploads');
+const routerUser = require('./routes/users');
+
 const cors = require('cors');
 
 // configurações de cors
@@ -12,6 +14,7 @@ app.use((req, res, next) => {
     app.use(cors());
     next();
     })
+
     // // intercept OPTIONS method
     // if ('OPTIONS' === req.method) {
     // 
@@ -31,8 +34,11 @@ app.use(morgan('dev'))
 app.use(express.urlencoded( { extended: false }))  // apenas dados simples
 app.use(express.json()) // entrada de json no body
 
+
+//Rotas para requests
 app.use('/products',routesProducts);
 app.use('/cadastro',routesUploads);
+app.use('/users',routerUser);
 
 
 app.use((req,res,next)=>{
