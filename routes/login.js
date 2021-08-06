@@ -32,10 +32,10 @@ router.post('/',(req,res,next) =>{
 
                     if(response){ 
 
-                        const token = jwt.sign({
-                            id_user: result[0].id,
-                            email: result[0].email
-                        })
+                        // const token = jwt.sign({
+                        //     id_user: result[0].id,
+                        //     email: result[0].email
+                        // })
 
                         // process.env.JWT_KEY,
                         // {
@@ -45,7 +45,7 @@ router.post('/',(req,res,next) =>{
 
                         return res.status(201).send({ 
                             menssage: 'login realizado com sucesso',
-                            token: token
+                            result: result
                          });
                         }
 
