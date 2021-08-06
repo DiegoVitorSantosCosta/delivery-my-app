@@ -32,9 +32,7 @@ router.post('/',(req,res,next) =>{
 
                     if(response){ 
                             
-                        const token = jjwt.sign({
-                            data: 'foobar'
-                          }, 'secret', { expiresIn: '1h' });
+                        const token = jwt.sign({ foo: 'bar' }, 'shhhhh',{expiresIn: "1h"});
 
                             
                            
