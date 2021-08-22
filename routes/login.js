@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt');
 router.post('/',(req,res,next) =>{    
 
     mysql.getConnection((error,conn) => {
+
         if(error) return res.status(500).send({ menssage: error });
 
         const query = "select * from users where email =  ?";
@@ -20,6 +21,7 @@ router.post('/',(req,res,next) =>{
             query,[req.body.email],
 
             async (error,result,field) => {
+
                 conn.release();
 
                 if(error) return res.status(500).send({ menssage: error });
@@ -28,6 +30,7 @@ router.post('/',(req,res,next) =>{
 
                
                  bcrypt.compare(req.body.password,result[0].password,(err,response)=>{
+                     
                     if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
 
                     if(response){ 
