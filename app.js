@@ -9,7 +9,6 @@ const routerLogin = require('./routes/login');
 const cors = require('cors');
 
 // configurações de cors
-app.use(cors())
 
 
 
