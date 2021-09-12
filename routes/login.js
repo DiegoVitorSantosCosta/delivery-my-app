@@ -1,12 +1,20 @@
 const express = require('express')
 const router = express.Router()
-
+const cors = require('cors')
 const mysql = require('../mysql').pool;
 var jwt = require('jsonwebtoken');
 
 // deixa em hash a senha
 
-router.post('/',(req,res,next) =>{    
+var corsOptions = {
+
+    origin: 'http://localhost:8100',
+
+    optionsSuccessStatus: 200 ,// some legacy browsers (IE11, various SmartTVs) choke on 204
+
+    
+  }
+router.post('/', cors(corsOptions),(req,res,next) =>{    
 
     mysql.getConnection((error,conn) => {
 
