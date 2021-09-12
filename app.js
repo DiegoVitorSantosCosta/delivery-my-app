@@ -17,17 +17,6 @@ app.use((req, res, next) => {
     next();
     })
 
-    // // intercept OPTIONS method
-    if ('OPTIONS' === req.method) {
-    
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
-      res.send(200);
-    }
-    else {
-      next();
-    }
-
-
 
 app.use('/uploads',express.static('uploads'));
 // monitora as requisições feitas.
