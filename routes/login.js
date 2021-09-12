@@ -28,14 +28,11 @@ router.post('/',(req,res,next) =>{
 
                 if(result.length < 1) return   res.status(409).send({ menssage: 'email não existe' }) ;
 
-               
-                if(req.body.password == result[0].password){
-                     
-                    if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
+                if(req.body.password != result[0].password) return res.status(409).send({ menssage: 'senha incorreta' }) ;
 
-                    if(response){ 
-                            
-                        const token = jwt.sign({ foo: 'bar' }, 'shhhhh',{expiresIn:"24h"});
+                else{
+                    
+                    const token = jwt.sign({ foo: 'bar' }, 'shhhhh',{expiresIn: "1h"});
 
                             
                            
@@ -44,11 +41,20 @@ router.post('/',(req,res,next) =>{
                             menssage: 'login realizado com sucesso',
                             token: token
                          });
+                }
+               
+                 bcrypt.compare(req.body.password,result[0].password,(err,response)=>{
+                     
+                    if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
+
+                    if(response){ 
+                            
+                        
                         }
 
                     return res.status(401).send({ menssage: 'senha errada' });
                    
-                }
+                })
             }
         )
 
