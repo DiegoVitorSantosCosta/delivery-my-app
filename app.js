@@ -10,8 +10,7 @@ const cors = require('cors');
 
 // configurações de cors
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Headers","*");
-    res.header("Content-Type","application/json");
+   
        
     app.use(cors());
     next();
