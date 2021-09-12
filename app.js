@@ -7,21 +7,27 @@ const routerUser = require('./routes/users');
 const routerLogin = require('./routes/login');
 
 const cors = require('cors');
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Headers","*");
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Request-Headers","*")
-//     app.use(cors());
-//   })
+
 // configurações de cors
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers","*");
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Request-Headers","*")
+    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
     app.use(cors());
     next();
     })
+
+    // // intercept OPTIONS method
+    // if ('OPTIONS' === req.method) {
+    // 
+    // res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
+    //   res.send(200);
+    // else {
+    //   next();
+    // }
+// })
+
 
 
 app.use('/uploads',express.static('uploads'));
@@ -55,6 +61,10 @@ app.use((error,req,res,next) =>{
         }
     })
 })
+
+
+
+
 
 module.exports = app
 
