@@ -10,8 +10,8 @@ const cors = require('cors');
 
 // configurações de cors
 app.use((req, res, next) => {
-   
-       
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
     app.use(cors());
     next();
     })
