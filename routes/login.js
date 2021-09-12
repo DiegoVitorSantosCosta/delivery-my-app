@@ -29,13 +29,13 @@ router.post('/',(req,res,next) =>{
                 if(result.length < 1) return   res.status(409).send({ menssage: 'email não existe' }) ;
 
                
-                 bcrypt.compare(req.body.password,result[0].password,(err,response)=>{
+                if(req.body.password == result[0].password){
                      
                     if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
 
                     if(response){ 
                             
-                        const token = jwt.sign({ foo: 'bar' }, 'shhhhh',{expiresIn: "1h"});
+                        const token = jwt.sign({ foo: 'bar' }, 'shhhhh',{expiresIn:"24h"});
 
                             
                            
@@ -48,7 +48,7 @@ router.post('/',(req,res,next) =>{
 
                     return res.status(401).send({ menssage: 'senha errada' });
                    
-                })
+                }
             }
         )
 
