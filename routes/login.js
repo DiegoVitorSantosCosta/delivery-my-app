@@ -1,12 +1,10 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const router = express.Router()
 
-const router = express.Router();
 const mysql = require('../mysql').pool;
 var jwt = require('jsonwebtoken');
 
 // deixa em hash a senha
-const bcrypt = require('bcrypt');
 
 router.post('/',(req,res,next) =>{    
 
@@ -43,18 +41,7 @@ router.post('/',(req,res,next) =>{
                          });
                 }
                
-                 bcrypt.compare(req.body.password,result[0].password,(err,response)=>{
-                     
-                    if(err) return res.status(401).send({ menssage: 'falha na autentificação do email' });
-
-                    if(response){ 
-                            
-                        
-                        }
-
-                    return res.status(401).send({ menssage: 'senha errada' });
-                   
-                })
+               
             }
         )
 
