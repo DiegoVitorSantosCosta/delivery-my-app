@@ -46,5 +46,30 @@ router.post('/',(req,res,next) =>{
     })
 })
 
+router.get('/',(req,res,next) =>{
+    
+        mysql.getConnection((error,conn) => {
+    
+            if(error) return res.status(500).send({ menssage: error });
+    
+            const query = "select * from users";
+    
+            conn.query(
+    
+                query,
+    
+                (error,result,field) => {
+    
+                    conn.release();
+    
+                    if(error) return res.status(500).send({ menssage: error });
+    
+                    return res.status(201).send({ menssage: result });
+                }
+            )
+    
+        })
+})
+
 
 module.exports = router
